@@ -1,11 +1,15 @@
-'use strict';
+"use strict";
 
-const Controller = require('egg').Controller;
+const Controller = require("egg").Controller;
 
-class LoginController extends Controller {
+class HomeController extends Controller {
   async index() {
-    this.ctx.body = 'hi, egg';
+    if (this.ctx.session && this.ctx.session.adming) {
+      this.ctx.body = "hi, egg";
+    } else {
+      this.ctx.redirect("/login");
+    }
   }
 }
 
-module.exports = LoginController;
+module.exports = HomeController;
