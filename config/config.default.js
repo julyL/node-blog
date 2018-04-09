@@ -1,9 +1,9 @@
 "use strict";
 const path = require("path");
-const password = "xxxx";  // dbpassword
+const dbConfig = require("./mongoDB.config");
 module.exports = appInfo => {
   const config = (exports = {
-    dburl: `mongodb://blog:${password}@ds235775.mlab.com:35775/node-blog`,
+    dburl: dbConfig.dburl,
     keys: appInfo.name + "_julyL_cookiekey",
     middleware: [],
     mapping: { ".ejs": "ejs" },

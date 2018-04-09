@@ -8,9 +8,14 @@ class LoginController extends Controller {
   }
   async submit(ctx) {
     var body = ctx.request.body;
-    console.log(body);
     if (body.username == "root" && body.password == "root") {
-      ctx.response.end({ code: 0, data: { redirectUrl: "/home" } });
+      this.ctx.session.user = "admin";
+      ctx.body = {
+        code: 0,
+        data: {
+          redirectUrl: "/admin"
+        }
+      }
     }
   }
 }

@@ -12,7 +12,6 @@ $sub.on("click", () => {
     },
     dataType:"json",
     success(data){
-        debugger;
       if (data.code == 0) {
         location.href = data.data.redirectUrl;
       }
