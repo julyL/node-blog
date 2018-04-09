@@ -1,0 +1,57 @@
+ #container {
+     width: 80%;
+     height: 600px;
+     position: absolute;
+     left: 0;
+     top: -100px;
+     bottom: 0;
+     right: 0;
+     margin: auto;
+ }
+
+ #editor {
+     overflow: auto;
+     box-sizing: border-box;
+     height: 500px;
+     box-shadow: 1px 4px 5px #ccc;
+     border: 1px solid #ccc;
+ }
+
+ #write {
+     float: left;
+     width: 50%;
+     height: 100%;
+     outline: none;
+     padding: 25px 10px;
+     border-right: 1px solid #ccc;
+ }
+
+ #preview {
+     padding: 10px;
+     width: 50%;
+     height: 100%;
+     outline: none;
+     float: right;
+ }
+
+ .input-w {
+     margin: 20px auto 80px;
+     display: block;
+     text-align: center;
+ }
+
+ #title {
+     border-bottom: 1px solid #ccc;
+     width: 100px;
+     text-align: center;
+ }
+
+ label {
+     margin: 0 10px 0 -60px;
+ }
+
+ #sub {
+     margin-top: 30px;
+     float: right;
+     cursor: pointer;
+ }

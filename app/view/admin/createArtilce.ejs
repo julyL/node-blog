@@ -1,0 +1,50 @@
+<link rel="stylesheet" href="/public/css/admin/article.css">
+<div id="container">
+    <div class="input-w">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name='title' value="<%= data.title%>">
+    </div>
+    <div id="editor">
+        <textarea id="write" oninput="this.editor.update()">
+            <%= data.content%>
+        </textarea>
+        <div id="preview"></div>
+    </div>
+    <div id="sub">save</div>
+</div>
+<script src="/public/lib/jquery.js"></script>
+<script src="/public/lib/markdown.js"></script>
+<script>
+    var $write = $("#write"),
+        $preview = $("#preview");
+    function Editor(input, preview) {
+        this.update = function () {
+            preview.innerHTML = markdown.toHTML(input.value);
+        };
+        input.editor = this;
+        this.update();
+    }
+    new Editor($write[0], $preview[0]);
+    $("#sub").on("click", function () {
+        $.ajax({
+            url: "/article/create",
+            type: "post",
+            dataType: "json",
+            data: {
+                content: $write.val(),
+                title: $("#title").val(),
+                date: +new Date(),
+                html: $preview.html()
+            },
+            success: function (data) {
+                var d = data.data;
+                if (data.code == 0) {
+                    location.href = '/archives';
+                } else {
+                    alert(data.data.msg)
+                }
+            },
+            error: function () {}
+        })
+    })
+</script>

@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 mongoose.Promise = Promise;
 
 class db extends Service {
-  async connect(ctx) {
+  async connect() {
     var ctx = this.ctx;
     mongoose.connect(this.config.dburl);
     return new Promise((re,rj)=>{

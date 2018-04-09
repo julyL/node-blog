@@ -7,16 +7,7 @@ class LoginController extends Controller {
     await ctx.render("login");
   }
   async submit(ctx) {
-    var body = ctx.request.body;
-    if (body.username == "root" && body.password == "root") {
-      this.ctx.session.user = "admin";
-      ctx.body = {
-        code: 0,
-        data: {
-          redirectUrl: "/admin"
-        }
-      }
-    }
+    await ctx.service.login.submit();
   }
 }
 module.exports = LoginController;

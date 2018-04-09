@@ -1,6 +1,6 @@
 const Service = require("egg").Service;
 class user extends Service {
-  async login(ctx) {
+  async login() {
     console.log(this.ctx.body);
   }
 }

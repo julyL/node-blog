@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const dbconfig = require("../../config/mongoDB.config");
 mongoose.Promise = Promise;
 module.exports = {
+    db: mongoose,
     async connect() {
         mongoose.connect(dbconfig.dburl);
         return new Promise((re, rj) => {
