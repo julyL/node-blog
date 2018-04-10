@@ -15,37 +15,34 @@ module.exports = (mongoose) => {
         date: {
             type: "String"
         },
+        articleId: {
+            type: "String"
+        }
     });
     var ArticleModel = mongoose.model("Article", ArticleSchema);
     return {
         createArticle(data) {
-            var article = new ArticleModel({
-                content: data.content,
-                html: data.html,
-                title: data.title,
-                date: data.date
-            })
+            var article = new ArticleModel(data);
             return article.save();
         },
         updateArticle(data) {
+            var articleId = data.articleId;
+            data.articleId = data.title;
             return ArticleModel.update({
-                _id: data.articleId
-            }, {
-                title: data.title,
-                content: data.content,
-                html: data.html,
-                date: data.date
+                articleId
+            }, data)
+        },
+        removeArticle(articleId) {
+            return ArticleModel.remove({
+                articleId
             })
         },
-        removeArtilce(data) {
-            return ArticleModel.remove(data)
-        },
-        getArticle(id) {
+        getArticle(articleId) {
             return ArticleModel.findOne({
-                _id: id
+                articleId
             });
         },
-        getListFromPages(data){
+        getListFromPages(data) {
             return ArticleModel.find({})
         }
     }

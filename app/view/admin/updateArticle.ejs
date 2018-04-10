@@ -11,14 +11,16 @@
         <div id="preview"></div>
     </div>
     <div id="sub">save</div>
+    <div id="delete">delete</div>
 </div>
 <script src="/public/lib/jquery.js"></script>
 <script src="/public/lib/markdown.js"></script>
 <script>
     var $write = $("#write"),
         $preview = $("#preview"),
-        splitArr = location.pathname.slice('/'),
-        articleId = splitArr[splitArr.length-1];
+        splitArr = location.pathname.split('/'),
+        articleId = splitArr[splitArr.length - 1];
+
     function Editor(input, preview) {
         this.update = function () {
             preview.innerHTML = markdown.toHTML(input.value);
@@ -37,17 +39,37 @@
                 title: $("#title").val(),
                 date: +new Date(),
                 html: $preview.html(),
-                articleId:articleId
+                articleId: articleId
             },
             success: function (data) {
                 var d = data.data;
                 if (data.code == 0) {
-                    location.href = '/archives';
+                    // location.href = '/archives';
                 } else {
                     alert(data.data.msg)
                 }
             },
-            error: function () { }
+            error: function () {}
+        })
+    });
+
+    $("#delete").on("click", function () {
+        $.ajax({
+            url: "/article/remove",
+            type: "post",
+            dataType: "json",
+            data: {
+                articleId: articleId
+            },
+            success: function (data) {
+                var d = data.data;
+                if (data.code == 0) {
+                    // location.href = '/archives';
+                } else {
+                    alert(data.data.msg)
+                }
+            },
+            error: function () {}
         })
     })
 </script>

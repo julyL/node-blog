@@ -17,6 +17,7 @@
 <script>
     var $write = $("#write"),
         $preview = $("#preview");
+
     function Editor(input, preview) {
         this.update = function () {
             preview.innerHTML = markdown.toHTML(input.value);
@@ -25,6 +26,7 @@
         this.update();
     }
     new Editor($write[0], $preview[0]);
+
     $("#sub").on("click", function () {
         $.ajax({
             url: "/article/create",

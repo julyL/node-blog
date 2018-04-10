@@ -4,8 +4,7 @@ const articleModel = require("../model/article")(db);
 const Service = require('egg').Service;
 
 class ArticleService extends Service {
-  async create() {
-    let data = this.ctx.request.body;
+  async create(data) {
     try {
       await articleModel.createArticle(data);
       this.ctx.body = {
@@ -18,8 +17,33 @@ class ArticleService extends Service {
       }
     }
   }
-  async update() {
-    console.log('update');
+
+  async update(data) {
+    try {
+      await articleModel.updateArticle(data);
+      this.ctx.body = {
+        code: 0
+      }
+    } catch (err) {
+      this.ctx.body = {
+        code: 0,
+        msg: err
+      }
+    }
+  }
+
+  async remove(articleId) {
+    try {
+      await articleModel.removeArticle(articleId);
+      this.ctx.body = {
+        code: 0
+      }
+    } catch (err) {
+      this.ctx.body = {
+        code: 0,
+        msg: err
+      }
+    }
   }
 
   async get(id) {

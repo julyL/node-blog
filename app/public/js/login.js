@@ -13,7 +13,7 @@ $sub.on("click", () => {
     dataType:"json",
     success(data){
       if (data.code == 0) {
-        location.href = data.data.redirectUrl;
+        // location.href = data.data.redirectUrl;
       }
     }
   });

@@ -1,0 +1,14 @@
+<div id="article-list">
+    <%for(var i=0;i<data.list.length;i++){%>
+        <div class='article-w'>
+            <div class="article-time">
+                <%=data.list[i].date%>
+            </div>
+            <a href="/article/<%= data.list[i].title%>">
+                <h3 class="article-title">
+                    <%=data.list[i].title%>
+                </h3>
+            </a>
+        </div>
+        <%}%>
+</div>
