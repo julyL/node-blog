@@ -10,6 +10,8 @@ module.exports = app => {
     middlewares
   } = app;
   router.get("/", controller.home.render);
+  router.get("/page/:page",controller.home.render);
+
   router.get("/404", (ctx) => {
     ctx.render('/404');
   });

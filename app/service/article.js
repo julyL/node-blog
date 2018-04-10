@@ -1,7 +1,7 @@
-'use strict';
-const db = require('../model/db').db;
+"use strict";
+const db = require("../model/db").db;
 const articleModel = require("../model/article")(db);
-const Service = require('egg').Service;
+const Service = require("egg").Service;
 
 class ArticleService extends Service {
   async create(data) {
@@ -9,12 +9,12 @@ class ArticleService extends Service {
       await articleModel.createArticle(data);
       this.ctx.body = {
         code: 0
-      }
+      };
     } catch (err) {
       this.ctx.body = {
         code: 0,
         msg: err
-      }
+      };
     }
   }
 
@@ -23,12 +23,12 @@ class ArticleService extends Service {
       await articleModel.updateArticle(data);
       this.ctx.body = {
         code: 0
-      }
+      };
     } catch (err) {
       this.ctx.body = {
         code: 0,
         msg: err
-      }
+      };
     }
   }
 
@@ -37,12 +37,12 @@ class ArticleService extends Service {
       await articleModel.removeArticle(articleId);
       this.ctx.body = {
         code: 0
-      }
+      };
     } catch (err) {
       this.ctx.body = {
         code: 0,
         msg: err
-      }
+      };
     }
   }
 
@@ -50,12 +50,24 @@ class ArticleService extends Service {
     return articleModel.getArticle(id);
   }
 
-  async loadArchives() {
-    let ctx = this.ctx,
-      data = ctx.request.body;
-    return await articleModel.getListFromPages();
+  async getArticleList(data) {
+    var allList = await articleModel.getListFromPages(data),
+      start = (data.page - 1) * data.limit - 1,
+      end = start + data.limit - 1,
+      list = [];
+    allList.forEach((v, i) => {
+      if (i >= start && i <= end) {
+        list.push(v);
+      }
+    });
+    return {
+      list,
+      page: {
+        allcount: allList.length,
+        page: data.page
+      }
+    };
   }
-
 }
 
 module.exports = ArticleService;
