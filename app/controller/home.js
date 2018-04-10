@@ -3,8 +3,9 @@
 const Controller = require("egg").Controller;
 
 class HomeController extends Controller {
-  async render() {
-      this.ctx.body = "hi, egg";
+  async render(ctx) {
+    var renderData = {};
+    await ctx.render('home');
   }
 }
 
