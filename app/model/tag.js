@@ -12,10 +12,11 @@ module.exports = (mongoose) => {
     return {
         async addTags(data) {
             var tasks = data.tags.map(async name => {
-                var tag = await tagModel.find({
+                var tag = await tagModel.findOne({
                     name
                 })
-                if (tag.length > 0) {
+                console.log(tag)
+                if (tag) {
                     return tag.update({
                         name,
                         number: tag.nubmer ? tag.number + 1 : 1,

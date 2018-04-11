@@ -10,6 +10,9 @@
     <link rel="stylesheet" type="text/css" href="/public/css/main.css">
     <link rel="stylesheet" type="text/css" href="/public/css/home.css">
     <link rel="stylesheet" type="text/css" href="/public/lib/editormd/editormd.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="/public/lib/theme/zenburn.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <style type="text/css">
         #container.show {
             background: linear-gradient(200deg, #a0cfe4, #e8c37e);
@@ -113,5 +116,13 @@
                 <%}%>
             </div>
         </div>
+        <script src="/public/lib/jquery.js"></script>
+        <script>
+        $(document).ready(function () {
+                $('pre code').each(function (i, block) {
+                    hljs.highlightBlock(block);
+                });
+        });
+        </script>
     </body>
 </html>

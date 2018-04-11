@@ -19,7 +19,7 @@
                 <ul class="article-tag-list">
                     <% for(var i=0;i<tags.length;i++){ %>
                     <li class="article-tag-list-item">
-                        <a href="/tag/<%= tags[i]%>" class="js-tag article-tag-list-link color3"><%= tags[i]%></a>
+                        <a href="/tag/<%= tags[i]%>" class="js-tag article-tag-list-link color3"><%= tags[i].name%></a>
                     </li>
                     <% }%>
                 </ul>
