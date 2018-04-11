@@ -34,7 +34,7 @@ class ArticleService extends Service {
 
   async remove(articleId) {
     try {
-      await articleModel.removeArticle(articleId);
+      await articleModel.removeArticleById(articleId);
       this.ctx.body = {
         code: 0
       };
@@ -47,11 +47,11 @@ class ArticleService extends Service {
   }
 
   async get(id) {
-    return articleModel.getArticle(id);
+    return articleModel.getArticleById(id);
   }
 
-  async getArticleList(data) {
-    var allList = await articleModel.getListFromPages(data),
+  async getArticleListByPage(data) {
+    var allList = await articleModel.getAllArticleList(data),
       start = (data.page - 1) * data.limit - 1,
       end = start + data.limit - 1,
       list = [];
@@ -67,6 +67,11 @@ class ArticleService extends Service {
         page: data.page
       }
     };
+  }
+
+  async getLatestArticles() {
+    var data = await articleModel.getLatestArticles();
+    return data;
   }
 }
 

@@ -32,18 +32,25 @@ module.exports = (mongoose) => {
                 articleId
             }, data)
         },
-        removeArticle(articleId) {
+        removeArticleById(articleId) {
             return ArticleModel.remove({
                 articleId
             })
         },
-        getArticle(articleId) {
+        getArticleById(articleId) {
             return ArticleModel.findOne({
                 articleId
             });
         },
-        getListFromPages(data) {
+        // 获取所有的文章
+        getAllArticleList() {
             return ArticleModel.find({})
+        },
+        // 获取最新文章
+        getLatestArticles(limit) {
+            return ArticleModel.find({}).limit(limit || 7).sort({
+                "date": 1
+            })
         }
     }
 }

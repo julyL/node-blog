@@ -54,7 +54,7 @@ class ArticleController extends Controller {
 
     // 归档文章列表
     async renderList(ctx) {
-        let renderData = await ctx.service.article.getArticleList({
+        let renderData = await ctx.service.article.getArticleListByPage({
             page:1,
             limit:99
         });
