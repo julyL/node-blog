@@ -18,7 +18,7 @@ class ArticleController extends Controller {
 
     // 新建文章页
     async renderCreate(ctx) {
-        await ctx.render('/admin/createArtilce', {
+        await ctx.render('/admin/create', {
             data: {}
         });
     }
