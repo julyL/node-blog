@@ -12,8 +12,7 @@ class HomeController extends Controller {
       limit: 7
     });
     articleList.list.forEach(v => {
-      v.intr = v.html;
-      v.date = moment(+v.date).format();
+      v.date = moment(+v.date).format('YYYY年MM月DD日 HH时MM分');
     });
 
     renderData.articleList = articleList;

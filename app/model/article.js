@@ -3,20 +3,18 @@ module.exports = (mongoose) => {
 
     //创建一个schema实例
     var ArticleSchema = new Schema({
-        content: {
+        markdown: {
             type: "String"
         }, // markdown内容
         html: {
             type: "String"
         }, // markdown转换后的html
-        title: {
-            type: "String"
-        },
         date: {
             type: "String"
         },
-        articleId: {
-            type: "String"
+        tags: [],
+        title:{
+            type:"String"
         }
     });
     var ArticleModel = mongoose.model("Article", ArticleSchema);

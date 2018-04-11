@@ -1,157 +1,116 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<html>
+
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-    <meta content="yes" name="apple-mobile-web-app-capable">
-    <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style">
-    <meta content="telephone=no" name="format-detection">
-    <meta name="description" content="julyL | blog | 心情 | 随笔">
-    <title>julyL的blog</title>
-    <link rel="stylesheet" type="text/css" href="/public/css/style.css?v=4.0.0">
-    <link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css">
-    <link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
-    <link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css">
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png?v=8j6Eo5no4g">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png?v=8j6Eo5no4g">
-    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png?v=8j6Eo5no4g">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png?v=8j6Eo5no4g">
-    <link rel="manifest" href="/favicons/manifest.json?v=8j6Eo5no4g">
-    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg?v=8j6Eo5no4g" color="#000000">
-    <link rel="shortcut icon" href="/favicons/favicon.ico?v=8j6Eo5no4g">
-    <meta name="msapplication-TileColor" content="#2d89ef">
-    <meta name="msapplication-TileImage" content="/favicons/mstile-144x144.png?v=8j6Eo5no4g">
-    <meta name="msapplication-config" content="/favicons/browserconfig.xml?v=8j6Eo5no4g">
-    <meta name="theme-color" content="#ffffff">
-</head>
-<body>
-    <div class="body_container">
-        <div id="header">
-            <div class="site-name">
-                <h1 class="hidden">julyL</h1>
-                <a id="logo" href="/.">julyL的blog</a>
-            </div>
-            <div id="nav-menu">
-                <a class="current" href="/.">
-                    <i class="fa fa-home"> 首页</i>
-                </a>
-                <a href="/archives/">
-                    <i class="fa fa-archive"> 归档</i>
-                </a>
-                <a href="/about/">
-                    <i class="fa fa-user"> 关于</i>
-                </a>
-                <a href="/guestbook/">
-                    <i class="fa fa-comments"> 留言</i>
-                </a>
-            </div>
-        </div>
-        <div class="pure-g" id="layout">
-            <div class="pure-u-1 pure-u-md-3-4">
-                <div class="content_container">
-                    <div class="post">
-                        <% for(var i=0; i<data.articleList.list.length; i++){ %>
-                        <h1 class="post-title">
-                            <a href="/article/<%= data.articleList.list[i].articleId%>"><%=data.articleList.list[i].title%></a>
-                        </h1>
-                        <div class="post-meta"><%=data.articleList.list[i].date%></div>
-                        <div class="post-content"><%=data.articleList.list[i].content%></div>
-                        <p class="readmore">
-                            <a href="/article/<%= data.articleList.list[i].articleId%>">阅读全文</a>
-                        </p>
-                        <% } %>
-                    </div>
-                    <nav class="page-navigator">
-                        <span class="page-number current">1</span>
-                        <a class="page-number" href="/page/2/">2</a>
-                        <a class="page-number" href="/page/3/">3</a>
-                        <span class="space">&hellip;</span>
-                        <a class="page-number" href="/page/21/">21</a>
-                        <a class="extend next" rel="next" href="/page/2/">下一页</a>
-                    </nav>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="dns-prefetch" href="https://julyl.github.io/blog">
+    <title>julyL的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" type="text/css" href="/public/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/public/lib/editormd/editormd.css">
+    <style type="text/css">
+        #container.show {
+            background: linear-gradient(200deg, #a0cfe4, #e8c37e);
+        }
+    </style>
+
+    <body>
+        <div id="container" q-class="show:isCtnShow" style="height: 949px;" class="">
+            <canvas id="anm-canvas" class="anm-canvas" width="1027" height="949"></canvas>
+            <div class="left-col" q-class="show:isShow">
+                <div class="overlay" style="background: #4d4d4d"></div>
+                <div class="intrude-less">
+                    <header id="header" class="inner">
+                        <a href="/blog" class="profilepic">
+                            <img src="http://omj0ol8hw.bkt.clouddn.com/17-7-7/31000481.jpg" class="js-avatar">
+                        </a>
+                        <hgroup>
+                            <h1 class="header-author">
+                                <a href="/blog">julyL</a>
+                            </h1>
+                        </hgroup>
+                        <p class="header-subtitle">随遇而安</p>
+                        <nav class="header-menu">
+                            <ul>
+                                <li>
+                                    <a href="/blog/">主页</a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <nav class="header-smart-menu">
+
+
+                            <a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+
+
+                        </nav>
+                        <nav class="header-nav">
+                            <div class="social">
+
+                                <a class="github" target="_blank" href="https://github.com/julyL" title="github">
+                                    <i class="icon-github"></i>
+                                </a>
+
+                            </div>
+                        </nav>
+                    </header>
                 </div>
+
             </div>
-            <div class="pure-u-1 pure-u-md-1-4">
-                <div id="sidebar">
-                    <div class="widget">
-                        <div class="search-form">
-                            <input id="local-search-input" placeholder="Search" type="text" name="q" results="0" />
-                            <div id="local-search-result"></div>
+            <div class="mid-col hide" q-class="show:isShow,hide:isShow|isFalse">
+                <nav id="mobile-nav">
+                    <div class="overlay js-overlay" style="background: #4d4d4d"></div>
+                    <div class="btnctn js-mobile-btnctn">
+                        <div class="slider-trigger list" q-on="click: openSlider(e)">
+                            <i class="icon icon-sort"></i>
                         </div>
                     </div>
-                    <% if(data.types&&data.types.length>0){%>
-                        <div class="widget">
-                            <div class="widget-title">
-                                <i class="fa fa-folder-o"> 分类</i>
+                    <div class="intrude-less">
+                        <header id="header" class="inner">
+                            <div class="profilepic">
+                                <img src="http://omj0ol8hw.bkt.clouddn.com/17-7-7/31000481.jpg" class="js-avatar">
                             </div>
-                            <ul class="category-list">
-                                <% for(var i=0; i<data.types.length;i++){ %>
-                                <li class="category-list-item">
-                                    <a class="category-list-link" href="/types/<%= data.types[i].name%>"><%= data.types[i].name%></a>
-                                </li>
-                                <% }%>
-                            </ul>
-                        </div>
-                    <% }%>
-                    <% if(data.tags&&data.tags.length>0){%>
-                        <div class="widget">
-                            <div class="widget-title">
-                                <i class="fa fa-star-o"> 标签</i>
-                            </div>
-                            <% for(var i=0; i<data.tags.length;i++){ %>
-                            <div class="tagcloud">
-                                <a href="/tag/<%= data.tags[i].name %>" style="font-size: 15px;"><%= data.tags[i].name%></a>
-                            </div>
-                            <% }%>
-                        </div>
-                    <% }%>
-                    <div class="widget">
-                        <div class="widget-title">
-                            <i class="fa fa-file-o"> 最近文章</i>
-                        </div>
-                        <ul class="post-list">
-                            <% for(var i=0; i<data.latestArticles.length;i++){ %>
-                                <li class="post-list-item">
-                                    <a class="post-list-link" href="/article/<%= data.latestArticles[i].articleId%>"><%= data.latestArticles[i].title%></a>
-                                </li>
-                            <% }%>
-                        </ul>
+                            <hgroup>
+                                <h1 class="header-author js-header-author">julyL</h1>
+                            </hgroup>
+                            <p class="header-subtitle">
+                                <i class="icon icon-quo-left"></i>随遇而安
+                                <i class="icon icon-quo-right"></i>
+                            </p>
+                            <nav class="header-nav">
+                                <div class="social">
+                                    <a class="github" target="_blank" href="https://github.com/julyL" title="github">
+                                        <i class="icon-github"></i>
+                                    </a>
+                                </div>
+                            </nav>
+                            <nav class="header-menu js-header-menu">
+                                <ul style="width: 50%">
+                                    <li style="width: 100%">
+                                        <a href="/blog/">主页</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </header>
                     </div>
-                    <% if(data.friendLinks&&data.friendLinks.length>0){%>
-                        <div class="widget">
-                            <div class="widget-title">
-                                <i class="fa fa-external-link">友情链接</i>
-                            </div>
-                            <ul class="post-list">
-                            <% for(var i=0; i<data.friendLinks.length;i++){ %>
-                                <li class="post-list-item">
-                                    <a class="post-list-link" href="<%= data.friendLinks[i].url%>" title="<%= data.friendLinks[i].name%>" target="_blank"><%= data.friendLinks[i].name%></a>
-                                </li>
-                            <% } %>
-                            </ul>
+                    <div class="mobile-mask" style="display: none;" q-show="isShow"></div>
+                </nav>
+                <div id="wrapper" class="body-wrap">
+                    <div class="menu-l">
+                        <div class="canvas-wrap">
+                            <canvas data-colors="#eaeaea" data-sectionheight="100" data-contentid="js-content" id="myCanvas1" class="anm-canvas"></canvas>
                         </div>
-                    <% }%>
+                        <% for(var i=0;i<data.articleList.list.length;i++){%>
+                            <div id="js-content" class="content-ll">
+                                <%- include('layout/article',data.articleList.list[i]) %>
+                            </div>
+                            <%}%>
+                    </div>
                 </div>
             </div>
         </div>
-        <a class="show" id="rocket" href="#top"></a>
-        <script type="text/javascript" src="/js/totop.js?v=4.0.0" async></script>
-        <script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.js" async></script>
-        <script type="text/javascript" src="/js/fancybox.js?v=4.0.0" async></script>
-        <link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.css">
-        <script type="text/javascript" src="/js/search.js?v=4.0.0"></script>
-        <script>var search_path = 'search.xml';
-            if (search_path.length == 0) {
-                search_path = 'search.xml';
-            }
-            var path = '/' + search_path;
-            searchFunc(path, 'local-search-input', 'local-search-result');
-        </script>
-        <script type="text/javascript" src="/js/codeblock-resizer.js?v=4.0.0"></script>
-        <script type="text/javascript" src="/js/smartresize.js?v=4.0.0"></script>
-    </div>
-</body>
+    </body>
 
 </html>
