@@ -13,8 +13,11 @@ module.exports = (mongoose) => {
             type: "String"
         },
         tags: [],
-        title:{
-            type:"String"
+        title: {
+            type: "String"
+        },
+        articleId: {
+            type: "String"
         }
     });
     var ArticleModel = mongoose.model("Article", ArticleSchema);

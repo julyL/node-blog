@@ -7,7 +7,8 @@ class ArticleController extends Controller {
     // 文章详情页
     async renderArticle(ctx) {
         var renderData = await ctx.service.article.get(ctx.params.id);
-        renderData.router = 'article';
+        renderData.tags = await ctx.service.article.getTags();
+        renderData.layout = 'article';
         if (renderData) {
             await ctx.render('/mainLayout', {
                 data: renderData
@@ -38,6 +39,7 @@ class ArticleController extends Controller {
         var data = ctx.request.body;
         data.articleId = data.title; // 暂时直接用标题作为id
         await ctx.service.article.create(data);
+        await ctx.service.article.addTags(data);
     }
 
     // 修改

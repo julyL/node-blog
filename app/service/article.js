@@ -1,6 +1,7 @@
 "use strict";
 const db = require("../model/db").db;
 const articleModel = require("../model/article")(db);
+const tagModel = require("../model/tag")(db);
 const Service = require("egg").Service;
 const moment = require('moment');
 
@@ -51,6 +52,7 @@ class ArticleService extends Service {
     return articleModel.getArticleById(id);
   }
 
+  // 获取分页文章列表
   async getArticleListByPage(data) {
     var allList = await articleModel.getAllArticleList(data),
       start = (data.page - 1) * data.limit - 1,
@@ -78,10 +80,22 @@ class ArticleService extends Service {
     };
   }
 
+  // 获取最新的文章
   async getLatestArticles() {
     var data = await articleModel.getLatestArticles();
     return data;
   }
+
+  // 添加标签
+  async addTags(data){
+    var data = await tagModel.addTags(data)
+    return data;
+  }
+  
+  async getTags(tagName){
+    return await tagModel.getTags(tagName);
+  }
+
 }
 
 module.exports = ArticleService;

@@ -12,6 +12,7 @@ module.exports = app => {
   router.get("/", controller.renderMain.renderHome);
   router.get("/archives", controller.renderMain.renderArchives)
   router.get("/page/:page", controller.renderMain.renderHome);
+  router.get('/tag/:tagName', controller.renderMain.renderArchivesByTags);
 
   router.get("/404", (ctx) => {
     ctx.render('/404');
@@ -30,5 +31,5 @@ module.exports = app => {
   router.post("/article/update", middlewares.checkLogin(), controller.article.updateArticle);
   router.post("/article/remove", middlewares.checkLogin(), controller.article.removeArticle);
 
- 
+  
 };

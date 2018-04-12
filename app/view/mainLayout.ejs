@@ -8,7 +8,7 @@
     <title>julyL的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" type="text/css" href="/public/css/main.css">
-    <link rel="stylesheet" type="text/css" href="/public/css/archives.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/home.css">
     <link rel="stylesheet" type="text/css" href="/public/lib/editormd/editormd.css">
     <style type="text/css">
         #container.show {
@@ -31,6 +31,19 @@
                             </h1>
                         </hgroup>
                         <p class="header-subtitle">随遇而安</p>
+                        <% if(data.tags&&data.tags.length>0){%>
+                            <div class="tag-list">
+                                <div class="tag-title">标签</div>
+                                <% for(var i=0;i<data.tags.length;i++){%>
+                                    <a href="/tag/<%= data.tags[i].name%>">
+                                    <span class="tag-li">
+                                        <span class="tag-name"><%= data.tags[i].name%></span>
+                                        <span class="tag-num">(<%= data.tags[i].number%>)</span>
+                                    </span>
+                                    </a>
+                                <%}%>
+                            </div>
+                        <%}%>
                         <nav class="header-menu">
                             <ul>
                                 <li>
@@ -89,12 +102,14 @@
                     </div>
                     <div class="mobile-mask" style="display: none;" q-show="isShow"></div>
                 </nav>
-                <% if(data.router == 'home'){%>
+                <% if(data.layout == 'articleList'){%>
                     <%- include('layout/articleList',data) %>
-                <%}else if(data.router == 'archives'){%>
+                <%}else if(data.layout == 'archives'){%>
                     <%- include('layout/archives',data) %>
-                <%}else if(data.router == 'article'){%>
+                <%}else if(data.layout == 'article'){%>
                     <%- include('layout/article',data) %>
+                <%}else if(data.layout == 'tag') {%>
+                    <%- include('layout/tag',data) %>
                 <%}%>
             </div>
         </div>

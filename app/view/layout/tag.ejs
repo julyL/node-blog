@@ -1,0 +1,12 @@
+<div id="tagname-wrapper">
+    <div class="tag-title">标签</div>
+    <% for(var i=0;i<data.tags.length;i++){%>
+        <a href="/tag/<%= data.tags[i].name%>" class="tag-li <%= data.tags[i].active?'tag-active':''%>">
+                <span class="tag-name">
+                    <%= data.tags[i].name%>
+                </span>
+                <span class="tag-num">(<%= data.tags[i].number%>)</span>
+        </a>
+        <%}%>
+</div>
+<%- include('archives',data)%>
