@@ -1,0 +1,12 @@
+<div id="article-list">
+    <%for(var i=0;i<data.archiveList.list.length;i++){%>
+        <div class='archives-li'>
+            <a href="/article/<%= data.archiveList.list[i].title%>" class="archives-title">
+                <%=data.archiveList.list[i].title%>
+            </a>
+            <div class="archives-time">
+                <%=data.archiveList.list[i].date%>
+            </div>
+        </div>
+    <%}%>
+</div>

@@ -7,8 +7,9 @@ class ArticleController extends Controller {
     // 文章详情页
     async renderArticle(ctx) {
         var renderData = await ctx.service.article.get(ctx.params.id);
+        renderData.router = 'article';
         if (renderData) {
-            await ctx.render('/article', {
+            await ctx.render('/mainLayout', {
                 data: renderData
             });
         } else {

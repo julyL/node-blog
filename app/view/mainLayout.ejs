@@ -8,13 +8,13 @@
     <title>julyL的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" type="text/css" href="/public/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/archives.css">
     <link rel="stylesheet" type="text/css" href="/public/lib/editormd/editormd.css">
     <style type="text/css">
         #container.show {
             background: linear-gradient(200deg, #a0cfe4, #e8c37e);
         }
     </style>
-
     <body>
         <div id="container" q-class="show:isCtnShow" style="height: 949px;" class="">
             <canvas id="anm-canvas" class="anm-canvas" width="1027" height="949"></canvas>
@@ -34,30 +34,22 @@
                         <nav class="header-menu">
                             <ul>
                                 <li>
-                                    <a href="/blog/">主页</a>
+                                    <a href="/archives">归档</a>
                                 </li>
-
                             </ul>
                         </nav>
                         <nav class="header-smart-menu">
-
-
                             <a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
-
-
                         </nav>
                         <nav class="header-nav">
                             <div class="social">
-
                                 <a class="github" target="_blank" href="https://github.com/julyL" title="github">
                                     <i class="icon-github"></i>
                                 </a>
-
                             </div>
                         </nav>
                     </header>
                 </div>
-
             </div>
             <div class="mid-col hide" q-class="show:isShow,hide:isShow|isFalse">
                 <nav id="mobile-nav">
@@ -89,7 +81,7 @@
                             <nav class="header-menu js-header-menu">
                                 <ul style="width: 50%">
                                     <li style="width: 100%">
-                                        <a href="/blog/">主页</a>
+                                        <a href="/archives">归档</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -97,20 +89,14 @@
                     </div>
                     <div class="mobile-mask" style="display: none;" q-show="isShow"></div>
                 </nav>
-                <div id="wrapper" class="body-wrap">
-                    <div class="menu-l">
-                        <div class="canvas-wrap">
-                            <canvas data-colors="#eaeaea" data-sectionheight="100" data-contentid="js-content" id="myCanvas1" class="anm-canvas"></canvas>
-                        </div>
-                        <% for(var i=0;i<data.articleList.list.length;i++){%>
-                            <div id="js-content" class="content-ll">
-                                <%- include('layout/article',data.articleList.list[i]) %>
-                            </div>
-                            <%}%>
-                    </div>
-                </div>
+                <% if(data.router == 'home'){%>
+                    <%- include('layout/articleList',data) %>
+                <%}else if(data.router == 'archives'){%>
+                    <%- include('layout/archives',data) %>
+                <%}else if(data.router == 'article'){%>
+                    <%- include('layout/article',data) %>
+                <%}%>
             </div>
         </div>
     </body>
-
 </html>

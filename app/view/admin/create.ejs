@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
     <meta charset="utf-8" />
     <title>Editor</title>
     <link rel="stylesheet" href="/public/css/editor.css" />
     <link rel="stylesheet" href="/public/lib/editormd/editormd.css" />
 </head>
+
 <body>
     <div id="layout">
         <div id="tags-list">
@@ -24,23 +26,22 @@
     <script src="/public/lib/jquery.js"></script>
     <script src="/public/lib/editormd/editormd.js"></script>
     <script type="text/javascript">
-        var testEditor;
+        var testEditor,
+            initmd = '--- \n\n title: 标题 \n date: 日期 \n tags: [ 标签 ] \n\n ---\n 正文内容';
         $(function () {
             testEditor = editormd("test-editormd", {
                 width: "90%",
                 height: 720,
-                theme:  "dark",
-                saveHTMLToTextarea: true, 
+                theme: "dark",
+                saveHTMLToTextarea: true,
                 imageUpload: true,
                 emoji: true,
-                markdown:`### 标题
-----
-开始正文内容`,
+                markdown: initmd,
                 imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
 
-                previewTheme:  "dark",
+                previewTheme: "dark",
 
-                editorTheme:  "base16-dark",
+                editorTheme: "base16-dark",
 
                 path: '/public/lib/'
             });
@@ -49,17 +50,18 @@
         $("#publish").on("click", function () {
             var markdown = testEditor.getMarkdown(),
                 html = testEditor.getHTML(),
-                tags = ['node', 'egg'],
-                arrH = ['h1','h2','h3','h4'],
+                tags = [],
+                date,
                 title,
-                $h;
-            $(html).siblings().each(function (ind, el) {
-                if (arrH.indexOf(el.tagName) && !$h) {
-                    $h = $(el);
-                }
-            })
-            html = $(html).remove($h).html();
-            title = $h.text();
+                $div = $("<div></div>").html(html);
+                info = dealHtml($div);
+            if (!info) {
+                alert("请设置标题");
+                return;
+            } else {
+                markdown = markdown.replace(/^---(.|\n)*?---\n/, '');
+                html = $div.html();
+            }
             $.ajax({
                 url: "/article/create",
                 type: "post",
@@ -67,9 +69,9 @@
                 data: {
                     html: html,
                     markdown: markdown,
-                    date: +new Date(),
-                    tags:tags,
-                    title:title
+                    date: info.date || +new Date(),
+                    tags: info.tags,
+                    title: info.title
                 },
                 success: function (data) {
                     var d = data.data;
@@ -79,9 +81,51 @@
                         alert(data.data.msg)
                     }
                 },
-                error: function () { }
+                error: function () {}
             })
         })
+
+        function dealHtml($div) {
+            var child = $div.children(),
+                text;
+            if (child[0].tagName == 'HR' && child[1].tagName == 'P' && child[2].tagName == 'HR') {
+                text = child.eq(1).text();
+            }
+            var title = text.match(/title:(.+?)date:/),
+                date = text.match(/date:(.+?)tags:/),
+                tags = text.match(/tags:(.+?)$/);
+
+            if (title && title[1].trim() != '标题') {
+                title = title[1].trim()
+            } else {
+                title = '';
+            }
+
+            if (date && date[1].trim() != '日期') {
+                date = date[1].trim()
+            } else {
+                date = '';
+            }
+
+            if (tags[1] && tags[1].trim() != '标签') {
+                tags = tags[1].trim().slice(1, -1).split(",").map(function (v) {
+                    return v && v.trim();
+                }).filter(function (v) {
+                    return v;
+                })
+            }
+
+            if (title) {
+                child[0].remove();
+                child[1].remove();
+                child[2].remove();
+                return {
+                    title: title,
+                    date: date,
+                    tags: tags
+                }
+            }
+        }
     </script>
 </body>
 

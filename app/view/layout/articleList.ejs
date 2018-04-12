@@ -1,0 +1,12 @@
+<div id="wrapper" class="body-wrap">
+    <div class="menu-l">
+        <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionheight="100" data-contentid="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+        </div>
+        <% for(var i=0;i<data.articleList.list.length;i++){%>
+            <div id="js-content" class="content-ll">
+                <%- include('article',data.articleList.list[i]) %>
+            </div>
+            <%}%>
+    </div>
+</div>

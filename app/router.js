@@ -9,8 +9,9 @@ module.exports = app => {
     controller,
     middlewares
   } = app;
-  router.get("/", controller.home.render);
-  router.get("/page/:page",controller.home.render);
+  router.get("/", controller.renderMain.renderHome);
+  router.get("/archives", controller.renderMain.renderArchives)
+  router.get("/page/:page", controller.renderMain.renderHome);
 
   router.get("/404", (ctx) => {
     ctx.render('/404');
@@ -29,5 +30,5 @@ module.exports = app => {
   router.post("/article/update", middlewares.checkLogin(), controller.article.updateArticle);
   router.post("/article/remove", middlewares.checkLogin(), controller.article.removeArticle);
 
-  router.get("/archives", controller.article.renderList)
+ 
 };

@@ -2,6 +2,7 @@
 const db = require("../model/db").db;
 const articleModel = require("../model/article")(db);
 const Service = require("egg").Service;
+const moment = require('moment');
 
 class ArticleService extends Service {
   async create(data) {
@@ -60,6 +61,14 @@ class ArticleService extends Service {
         list.push(v);
       }
     });
+
+    // 处理date
+    list.forEach(v => {
+      if (new Date(+v.date) > new Date(0)) {  // 只有是有效时间戳才处理
+        v.date = moment(+v.date).format('YYYY年MM月DD日');
+      }
+    });
+
     return {
       list,
       page: {
