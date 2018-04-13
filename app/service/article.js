@@ -4,10 +4,12 @@ const articleModel = require("../model/article")(db);
 const tagModel = require("../model/tag")(db);
 const Service = require("egg").Service;
 const moment = require('moment');
+const getArticleIdFromTitle = require("../util").getArticleIdFromTitle;
 
 class ArticleService extends Service {
   async create(data) {
     try {
+      data.articleId = getArticleIdFromTitle(data.title);
       await articleModel.createArticle(data);
       this.ctx.body = {
         code: 0
@@ -22,6 +24,7 @@ class ArticleService extends Service {
 
   async update(data) {
     try {
+      data.newId = getArticleIdFromTitle(data.title);
       await articleModel.updateArticle(data);
       this.ctx.body = {
         code: 0

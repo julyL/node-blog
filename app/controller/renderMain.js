@@ -1,5 +1,4 @@
 "use strict";
-
 const Controller = require("egg").Controller;
 
 class HomeController extends Controller {
@@ -14,29 +13,29 @@ class HomeController extends Controller {
       limit: 100
     });
 
-    renderData.tags = await ctx.service.article.getTags();
-
     return renderData;
   }
 
   // 渲染主页
   async renderHome(ctx) {
     let renderData = await this.getRenderData(ctx);
-    renderData.layout = 'articleList';
+    let tags = await ctx.service.article.getTags();
 
     await ctx.render("mainLayout", {
-      data: renderData
+      data: renderData,
+      layout : 'articleList',
+      tags
     });
   }
 
   // 渲染归档页面
   async renderArchives(ctx) {
     let renderData = await this.getRenderData(ctx);
-
-    renderData.layout = 'archives';
-
+    let tags = await ctx.service.article.getTags();
     await ctx.render("mainLayout", {
-      data: renderData
+      data: renderData,
+      layout : 'archives',
+      tags
     })
   }
 
@@ -44,10 +43,12 @@ class HomeController extends Controller {
   async renderArchivesByTags(ctx) {
     let tagName = ctx.params.tagName;
     let renderData = await this.getRenderData(ctx);
-    renderData.tags.forEach(v => {
+    let tags = await ctx.service.article.getTags();
+
+    tags.forEach(v => {
       v.active = v.name == tagName; // 标记选中的tag
     });
-    renderData.layout = 'tag';
+    renderData.tags = tags;
 
     // 根据tag筛选文章
     var activeTags = await ctx.service.article.getTags(tagName)
@@ -56,7 +57,9 @@ class HomeController extends Controller {
     })
 
     await ctx.render("mainLayout", {
-      data: renderData
+      data: renderData,
+      layout : 'tag',
+      tags
     })
 
   }

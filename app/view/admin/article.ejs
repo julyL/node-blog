@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Editor</title>
+    <link rel="stylesheet" href="/public/css/editor.css" />
+    <link rel="stylesheet" href="/public/lib/editormd/editormd.css" />
+</head>
+
+<body>
+    <div id="layout">
+        <div id="test-editormd">
+            <textarea style="display:none;"><%= data.fullMd%></textarea>
+        </div>
+        <div class="btn-w">
+            <div class="btn" id="delete">删除文章</div>
+            <div class="btn" id="publish">发布文章</div>
+        </div>
+    </div>
+    <script src="/public/lib/jquery.js"></script>
+    <script src="/public/lib/editormd/editormd.js"></script>
+    <script type="text/javascript">
+        var testEditor, pathArr = location.pathname.split("/"),
+            articleId = pathArr[pathArr.length - 1];
+        $(function () {
+            testEditor = editormd("test-editormd", {
+                width: "100%",
+                height: "100%",
+                fullscreen: true,
+                saveHTMLToTextarea: true,
+                imageUpload: true,
+                emoji: true,
+                imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                path: '/public/lib/',
+                onload: function () {
+                    this.fullscreen();
+                }
+            });
+        });
+
+        $("#publish").on("click", function () {
+            var fullMd = testEditor.getMarkdown(),
+                html = testEditor.getHTML(),
+                tags = [],
+                date,
+                title,
+                markdown,
+                $div = $("<div></div>").html(html);
+            info = dealHtml($div);
+            if (!info) {
+                alert("请设置标题");
+                return;
+            } else {
+                markdown = fullMd.replace(/^(.|\n)*?---\n/, '');
+                html = $div.html();
+            }
+            $.ajax({
+                url: "/article/update",
+                type: "post",
+                dataType: "json",
+                data: {
+                    html: html,
+                    markdown: markdown,
+                    date: info.date || +new Date(),
+                    tags: info.tags,
+                    title: info.title,
+                    fullMd: fullMd,
+                    articleId: articleId
+                },
+                success: function (data) {
+                    var d = data.data;
+                    if (data.code == 0) {
+                        // location.href = '/archives';
+                    } else {
+                        alert(data.msg)
+                    }
+                },
+                error: function () {}
+            })
+        })
+
+        function dealHtml($div) {
+            var child = $div.children(),
+                header;
+            if (child[0].tagName == 'P' && child[1].tagName == 'HR') {
+                header = child.eq(0).text();
+            }
+            var title = header.match(/title:(.+?)date:/),
+                date = header.match(/date:(.+?)tags:/),
+                tags = header.match(/tags:(.+?)$/);
+
+            if (title && title[1].trim() != '标题') {
+                title = title[1].trim()
+            } else {
+                title = '';
+            }
+            if (date) {
+                date = date[1].trim()
+            } else {
+                date = '';
+            }
+
+            if (tags[1]) {
+                tags = tags[1].trim().slice(1, -1).split(",").map(function (v) {
+                    return v && v.trim();
+                }).filter(function (v) {
+                    return v;
+                })
+            }
+            if (title) {
+                child[0].remove();
+                child[1].remove();
+                return {
+                    title: title,
+                    date: date,
+                    tags: tags
+                }
+            }
+        }
+
+        $("#delete").on("click", function () {
+            $.ajax({
+                url: "/article/remove",
+                type: "post",
+                data: {
+                    articleId: articleId
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 0) {
+                        location.href = "/archives"
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

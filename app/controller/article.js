@@ -1,17 +1,16 @@
 'use strict';
-
 const Controller = require('egg').Controller;
-
 class ArticleController extends Controller {
 
     // 文章详情页
     async renderArticle(ctx) {
         var renderData = await ctx.service.article.get(ctx.params.id);
-        renderData.tags = await ctx.service.article.getTags();
-        renderData.layout = 'article';
+        let tags = await ctx.service.article.getTags();
         if (renderData) {
             await ctx.render('/mainLayout', {
-                data: renderData
+                data: renderData,
+                layout: 'article',
+                tags
             });
         } else {
             ctx.redirect('/404')
@@ -20,7 +19,7 @@ class ArticleController extends Controller {
 
     // 新建文章页
     async renderCreate(ctx) {
-        await ctx.render('/admin/create', {
+        await ctx.render('/admin/newArticle', {
             data: {}
         });
     }
@@ -29,7 +28,7 @@ class ArticleController extends Controller {
     async renderUpdate(ctx) {
         let articleId = ctx.params.id;
         let renderData = await ctx.service.article.get(articleId);
-        await ctx.render('/admin/updateArticle', {
+        await ctx.render('/admin/article', {
             data: renderData
         });
     }
@@ -37,15 +36,23 @@ class ArticleController extends Controller {
     // 新建
     async createArticle(ctx) {
         var data = ctx.request.body;
-        data.articleId = data.title; // 暂时直接用标题作为id
-        await ctx.service.article.create(data);
-        await ctx.service.article.addTags(data);
+        var isExists = await ctx.service.article.get(data.articleId);
+        if (isExists) {
+            ctx.body = {
+                code: 1000,
+                msg: "标题已存在"
+            }
+        } else {
+            return Promise.all([
+                await ctx.service.article.create(data),
+                await ctx.service.article.addTags(data)
+            ])
+        }
     }
 
     // 修改
     async updateArticle(ctx) {
         var data = ctx.request.body;
-        data.articleId = data.title;
         await ctx.service.article.update(data);
     }
 
@@ -58,8 +65,8 @@ class ArticleController extends Controller {
     // 归档文章列表
     async renderList(ctx) {
         let renderData = await ctx.service.article.getArticleListByPage({
-            page:1,
-            limit:99
+            page: 1,
+            limit: 99
         });
         await ctx.render('/archives', {
             data: {

@@ -3,12 +3,15 @@ module.exports = (mongoose) => {
 
     //创建一个schema实例
     var ArticleSchema = new Schema({
+        fullMd: {
+            type: "String"
+        },
         markdown: {
             type: "String"
-        }, // markdown内容
+        },
         html: {
             type: "String"
-        }, // markdown转换后的html
+        },
         date: {
             type: "String"
         },
@@ -27,20 +30,19 @@ module.exports = (mongoose) => {
             return article.save();
         },
         updateArticle(data) {
-            var articleId = data.articleId;
-            data.articleId = data.title;
+            console.log('update',data);
             return ArticleModel.update({
-                articleId
+                articleId: decodeURI(data.newId)
             }, data)
         },
         removeArticleById(articleId) {
             return ArticleModel.remove({
-                articleId
+                articleId: decodeURI(articleId)
             })
         },
         getArticleById(articleId) {
             return ArticleModel.findOne({
-                articleId
+                articleId: decodeURI(articleId)
             });
         },
         // 获取所有的文章

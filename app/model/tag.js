@@ -15,12 +15,14 @@ module.exports = (mongoose) => {
                 var tag = await tagModel.findOne({
                     name
                 })
-                console.log(tag)
                 if (tag) {
-                    return tag.update({
+                    tag.ids.push(data.articleId);
+                    return tagModel.update({
+                        name
+                    }, {
                         name,
-                        number: tag.nubmer ? tag.number + 1 : 1,
-                        ids: tag.ids.push(data.articleId)
+                        number: tag.number ? tag.number + 1 : 1,
+                        ids: tag.ids
                     })
                 } else {
                     var tag = new tagModel({

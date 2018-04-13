@@ -1,3 +1,7 @@
+#container.show {
+    background: linear-gradient(200deg, #a0cfe4, #e8c37e);
+}
+
 #article-list {
     background: #fff;
     color: #666;
@@ -8,6 +12,11 @@
 
 .archives-li {
     overflow: hidden;
+    line-height: 35px;
+}
+
+.archives-li:not(:last-child) {
+    margin-bottom: 20px;
 }
 
 .archives-title {
@@ -16,7 +25,6 @@
     margin-left: 0;
     font-weight: 300;
     line-height: 35px;
-    margin-bottom: 20px;
     font-size: 22px;
     transition: color .3s;
 }
@@ -82,4 +90,19 @@
     border-radius: 3px;
     color: #fff;
     border: none;
+}
+
+.article-inner {
+    position: relative;
+}
+
+.modeify-article {
+    position: absolute;
+    right: 0;
+    top: -1px;
+    background: #000;
+    color: #fff;
+    padding: 2px 15px;
+    font-size: 14px;
+    border-radius: 3px;
 }

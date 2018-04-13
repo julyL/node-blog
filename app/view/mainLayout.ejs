@@ -13,11 +13,6 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
     <link rel="stylesheet" href="/public/lib/theme/zenburn.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <style type="text/css">
-        #container.show {
-            background: linear-gradient(200deg, #a0cfe4, #e8c37e);
-        }
-    </style>
     <body>
         <div id="container" q-class="show:isCtnShow" style="height: 949px;" class="">
             <canvas id="anm-canvas" class="anm-canvas" width="1027" height="949"></canvas>
@@ -25,23 +20,23 @@
                 <div class="overlay" style="background: #4d4d4d"></div>
                 <div class="intrude-less">
                     <header id="header" class="inner">
-                        <a href="/blog" class="profilepic">
+                        <a href="/" class="profilepic">
                             <img src="http://omj0ol8hw.bkt.clouddn.com/17-7-7/31000481.jpg" class="js-avatar">
                         </a>
                         <hgroup>
                             <h1 class="header-author">
-                                <a href="/blog">julyL</a>
+                                <a href="/">julyL</a>
                             </h1>
                         </hgroup>
-                        <p class="header-subtitle">随遇而安</p>
-                        <% if(data.tags&&data.tags.length>0){%>
+                        <p class="header-subtitle">Myblog</p>
+                        <% if(tags&&tags.length>0){%>
                             <div class="tag-list">
                                 <div class="tag-title">标签</div>
-                                <% for(var i=0;i<data.tags.length;i++){%>
-                                    <a href="/tag/<%= data.tags[i].name%>">
+                                <% for(var i=0;i<tags.length;i++){%>
+                                    <a href="/tag/<%= tags[i].name%>">
                                     <span class="tag-li">
-                                        <span class="tag-name"><%= data.tags[i].name%></span>
-                                        <span class="tag-num">(<%= data.tags[i].number%>)</span>
+                                        <span class="tag-name"><%= tags[i].name%></span>
+                                        <span class="tag-num">(<%= tags[i].number%>)</span>
                                     </span>
                                     </a>
                                 <%}%>
@@ -105,13 +100,13 @@
                     </div>
                     <div class="mobile-mask" style="display: none;" q-show="isShow"></div>
                 </nav>
-                <% if(data.layout == 'articleList'){%>
+                <% if(layout == 'articleList'){%>
                     <%- include('layout/articleList',data) %>
-                <%}else if(data.layout == 'archives'){%>
+                <%}else if(layout == 'archives'){%>
                     <%- include('layout/archives',data) %>
-                <%}else if(data.layout == 'article'){%>
+                <%}else if(layout == 'article'){%>
                     <%- include('layout/article',data) %>
-                <%}else if(data.layout == 'tag') {%>
+                <%}else if(layout == 'tag') {%>
                     <%- include('layout/tag',data) %>
                 <%}%>
             </div>
