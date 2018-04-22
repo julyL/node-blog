@@ -865,7 +865,6 @@ html {
     position: absolute;
     right: 0;
     min-height: 100%;
-    background: #eaeaea;
     left: 300px;
     width: auto
 }
@@ -2128,7 +2127,7 @@ pre .id {
 }
 
 .article {
-    margin: 30px;
+    margin: 0 30px 22px;
     position: relative;
     border: 1px solid #ddd;
     border-top: 1px solid #fff;
@@ -4148,4 +4147,11 @@ a.pswp__share--download:hover {
 .pswp__error-msg a {
     color: #ccc;
     text-decoration: underline
+}
+
+body {
+    background: url(/public/image/login-bg.png);
+}
+.article-container{
+    padding-top: 60px;
 }

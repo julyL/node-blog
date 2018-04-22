@@ -29,17 +29,33 @@ module.exports = (mongoose) => {
             var article = new ArticleModel(data);
             return article.save();
         },
-        updateArticle(data) {
-            console.log('update',data);
-            return ArticleModel.update({
-                articleId: decodeURI(data.newId)
-            }, data)
+        async updateArticle(data) {
+            if (data.newId == data.articleId) {
+                return ArticleModel.update({
+                    articleId: decodeURI(data.articleId)
+                }, {
+                    $set: {
+                        tags: data.tags,
+                        html: data.html,
+                        markdown: data.markdown,
+                        date: data.date,
+                        title: data.title,
+                        fullMd: data.fullMd
+                    }
+                })
+            } else {  //articleId发生变化则直接删除旧的建新的
+                await this.removeArticleById(data.articleId);
+                data.articleId = data.newId;
+                return this.createArticle(data);
+            }
         },
+        // 根据文章ID删除文章
         removeArticleById(articleId) {
             return ArticleModel.remove({
                 articleId: decodeURI(articleId)
             })
         },
+        // 根据文章ID获取文章详情
         getArticleById(articleId) {
             return ArticleModel.findOne({
                 articleId: decodeURI(articleId)

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Editor</title>
+    <title>修改文章</title>
     <link rel="stylesheet" href="/public/css/editor.css" />
     <link rel="stylesheet" href="/public/lib/editormd/editormd.css" />
 </head>
@@ -22,7 +22,8 @@
     <script src="/public/lib/editormd/editormd.js"></script>
     <script type="text/javascript">
         var testEditor, pathArr = location.pathname.split("/"),
-            articleId = pathArr[pathArr.length - 1];
+            articleId = pathArr[pathArr.length - 1],
+            ajaxlock = false;
         $(function () {
             testEditor = editormd("test-editormd", {
                 width: "100%",
@@ -40,6 +41,10 @@
         });
 
         $("#publish").on("click", function () {
+            if (ajaxlock) {
+                return;
+            }
+            ajaxlock = true;
             var fullMd = testEditor.getMarkdown(),
                 html = testEditor.getHTML(),
                 tags = [],
@@ -71,12 +76,13 @@
                 success: function (data) {
                     var d = data.data;
                     if (data.code == 0) {
-                        // location.href = '/archives';
+                        location.href = '/';
                     } else {
                         alert(data.msg)
                     }
-                },
-                error: function () {}
+                }
+            }).always(function () {
+                ajaxlock = false;
             })
         })
 
@@ -120,6 +126,10 @@
         }
 
         $("#delete").on("click", function () {
+            if (ajaxlock) {
+                return;
+            }
+            ajaxlock = true;
             $.ajax({
                 url: "/article/remove",
                 type: "post",
@@ -129,11 +139,13 @@
                 dataType: "json",
                 success: function (data) {
                     if (data.code == 0) {
-                        location.href = "/archives"
+                        location.href = "/"
                     } else {
                         alert(data.msg);
                     }
                 }
+            }).always(function () {
+                ajaxlock = false;
             })
         })
     </script>

@@ -4,8 +4,8 @@ class ArticleController extends Controller {
 
     // 文章详情页
     async renderArticle(ctx) {
-        var renderData = await ctx.service.article.get(ctx.params.id);
-        let tags = await ctx.service.article.getTags();
+        var renderData = await ctx.service.article.find(ctx.params.id);
+        let tags = await ctx.service.tag.findAll();
         if (renderData) {
             await ctx.render('/mainLayout', {
                 data: renderData,
@@ -27,7 +27,7 @@ class ArticleController extends Controller {
     // 修改文章页
     async renderUpdate(ctx) {
         let articleId = ctx.params.id;
-        let renderData = await ctx.service.article.get(articleId);
+        let renderData = await ctx.service.article.find(articleId);
         await ctx.render('/admin/article', {
             data: renderData
         });
@@ -36,7 +36,7 @@ class ArticleController extends Controller {
     // 新建
     async createArticle(ctx) {
         var data = ctx.request.body;
-        var isExists = await ctx.service.article.get(data.articleId);
+        var isExists = await ctx.service.article.find(data.articleId);
         if (isExists) {
             ctx.body = {
                 code: 1000,
@@ -45,21 +45,29 @@ class ArticleController extends Controller {
         } else {
             return Promise.all([
                 await ctx.service.article.create(data),
-                await ctx.service.article.addTags(data)
+                await ctx.service.tag.addEach(data)
             ])
         }
     }
 
     // 修改
     async updateArticle(ctx) {
-        var data = ctx.request.body;
-        await ctx.service.article.update(data);
+        let data = ctx.request.body,
+            before = await ctx.service.article.find(data.articleId);
+        return Promise.all([
+            await ctx.service.tag.update(before, data),
+            await ctx.service.article.update(data)
+        ])
     }
 
     // 删除
     async removeArticle(ctx) {
-        var articleId = ctx.request.body.articleId;
-        await ctx.service.article.remove(articleId)
+        var data = ctx.request.body,
+            article = await ctx.service.article.find(data.articleId);
+        return Promise.all([
+            await ctx.service.article.remove(data.articleId),
+            await ctx.service.tag.remove(article)
+        ])
     }
 
     // 归档文章列表

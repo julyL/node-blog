@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Editor</title>
+    <title>新建文章</title>
     <link rel="stylesheet" href="/public/css/editor.css" />
     <link rel="stylesheet" href="/public/lib/editormd/editormd.css" />
 </head>
@@ -21,7 +21,8 @@
     <script src="/public/lib/editormd/editormd.js"></script>
     <script type="text/javascript">
         var testEditor,
-            initmd = ' title: 标题 \n date:  \n tags: \n\n ---\n';
+            initmd = ' title: 标题 \n date:  \n tags: \n\n ---\n',
+            ajaxlock = false;
         $(function () {
             testEditor = editormd("test-editormd", {
                 width: "100%",
@@ -40,6 +41,10 @@
         });
 
         $("#publish").on("click", function () {
+            if (ajaxlock) {
+                return;
+            }
+            ajaxlock = true;
             var fullMd = testEditor.getMarkdown(),
                 html = testEditor.getHTML(),
                 tags = [],
@@ -56,27 +61,28 @@
                 html = $div.html();
             }
             $.ajax({
-                url: "/article/create",
-                type: "post",
-                dataType: "json",
-                data: {
-                    html: html,
-                    markdown: markdown,
-                    date: info.date || +new Date(),
-                    tags: info.tags,
-                    title: info.title,
-                    fullMd: fullMd
-                },
-                success: function (data) {
+                    url: "/article/create",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        html: html,
+                        markdown: markdown,
+                        date: info.date || +new Date(),
+                        tags: info.tags,
+                        title: info.title,
+                        fullMd: fullMd
+                    },
+                })
+                .done(function (data) {
                     var d = data.data;
                     if (data.code == 0) {
-                        location.href = '/archives';
+                        location.href = '/';
                     } else {
                         alert(data.msg)
                     }
-                },
-                error: function () {}
-            })
+                }).always(function(){
+                    ajaxlock = false;
+                })
         })
 
         function dealHtml($div) {

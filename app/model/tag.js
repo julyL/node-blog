@@ -10,32 +10,75 @@ module.exports = (mongoose) => {
 
     var tagModel = mongoose.model("tag", TagSchema);
     return {
-        async addTags(data) {
-            var tasks = data.tags.map(async name => {
-                var tag = await tagModel.findOne({
-                    name
-                })
-                if (tag) {
-                    tag.ids.push(data.articleId);
-                    return tagModel.update({
-                        name
-                    }, {
-                        name,
-                        number: tag.number ? tag.number + 1 : 1,
-                        ids: tag.ids
-                    })
-                } else {
-                    var tag = new tagModel({
-                        name,
-                        number: 1,
-                        ids: [data.articleId]
-                    });
-                    return tag.save();
+        /**
+         * 新建标签
+         * @param {String} tagName 标签名
+         * @param {Object} data 文章数据
+         */
+        async create(tagName, data) {
+            var tag = new tagModel({
+                name: tagName,
+                number: 1,
+                ids: [data.articleId]
+            });
+            return tag.save();
+        },
+        /**
+         * 根据标签名返回相应的tagModel数据
+         * @param {String} name 标签名
+         */
+        async find(name) {
+            return await tagModel.findOne({
+                name
+            })
+        },
+        /**
+         * 增加标签数量
+         * @param {Object} tag tagModel数据
+         * @param {Object} data 文章数据
+         */
+        async add(tag, data) {
+            tag.ids.push(data.articleId);
+            return tagModel.update({
+                name: tag.name
+            }, {
+                $set: {
+                    number: tag.number + 1,
+                    ids: tag.ids
                 }
             })
-            return Promise.all(tasks);
         },
-        async getTags(name) {
+        /**
+         * 减少标签数量
+         * @param {Object} tag tagModel数据
+         * @param {Object} data 文章数据
+         */
+        async subtract(tag, data) {
+            var ind = tag.ids.indexOf(data.articleId);
+            tag.ids.splice(ind, 1);
+            return tagModel.update({
+                name: tag.name
+            }, {
+                $set: {
+                    number: tag.number - 1,
+                    ids: tag.ids
+                }
+            })
+        },
+        /**
+         * 移除标签
+         * @param {Object} tag tagModel数据 
+         */
+        async remove(tag) {
+            return tagModel.remove({
+                name: tag.name
+            })
+        },
+        /**
+         * 获取所有标签
+         * @param {String|undefined} name 标签名
+         */
+        async findAll(name) {
             if (name) {
                 return await tagModel.findOne({
                     name

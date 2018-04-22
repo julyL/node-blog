@@ -44,6 +44,11 @@
                         <%}%>
                         <nav class="header-menu">
                             <ul>
+                                <% if(data.admin){ %>
+                                    <li style="width: 100%">
+                                        <a href="/admin/create">新建</a>
+                                    </li>
+                                    <%}%>
                                 <li>
                                     <a href="/archives">归档</a>
                                 </li>
@@ -62,7 +67,7 @@
                     </header>
                 </div>
             </div>
-            <div class="mid-col hide" q-class="show:isShow,hide:isShow|isFalse">
+            <div class="mid-col hide article-container"  q-class="show:isShow,hide:isShow|isFalse">
                 <nav id="mobile-nav">
                     <div class="overlay js-overlay" style="background: #4d4d4d"></div>
                     <div class="btnctn js-mobile-btnctn">
@@ -91,6 +96,11 @@
                             </nav>
                             <nav class="header-menu js-header-menu">
                                 <ul style="width: 50%">
+                                    <% if(data.admin){ %>
+                                    <li style="width: 100%">
+                                        <a href="/admin/create">新建</a>
+                                    </li>
+                                    <%}%>
                                     <li style="width: 100%">
                                         <a href="/archives">归档</a>
                                     </li>

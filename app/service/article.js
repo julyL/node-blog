@@ -1,7 +1,6 @@
 "use strict";
 const db = require("../model/db").db;
 const articleModel = require("../model/article")(db);
-const tagModel = require("../model/tag")(db);
 const Service = require("egg").Service;
 const moment = require('moment');
 const getArticleIdFromTitle = require("../util").getArticleIdFromTitle;
@@ -51,7 +50,7 @@ class ArticleService extends Service {
     }
   }
 
-  async get(id) {
+  async find(id) {
     return articleModel.getArticleById(id);
   }
 
@@ -87,16 +86,6 @@ class ArticleService extends Service {
   async getLatestArticles() {
     var data = await articleModel.getLatestArticles();
     return data;
-  }
-
-  // 添加标签
-  async addTags(data){
-    var data = await tagModel.addTags(data)
-    return data;
-  }
-  
-  async getTags(tagName){
-    return await tagModel.getTags(tagName);
   }
 
 }

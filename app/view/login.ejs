@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Login</title>
+    <link rel="stylesheet" href="/public/css/login.css">
 </head>
+
 <body>
-    <form class="form-horizontal">
-        <fieldset>
-            <legend>用户登入</legend>
-            <div class="control-group">
-                <label class="control-label" for="username">用户名</label>
-                <div class="controls">
-                    <input type="text" class="input-xlarge" id="username" name="username">
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="password">口令</label>
-                <div class="controls">
-                    <input type="password" class="input-xlarge" id="password" name="password">
-                </div>
-            </div>
-            <div class="form-actions">
-                <div class="btn btn-primary" id="sub">登入</div>
-            </div>
-        </fieldset>
-    </form>
+    <div id="login-box">
+        <div class="login-title">Login In</div>
+        <div class="input-line">
+            <label for="username">Username</label>
+            <input class="input" type="text" id="username">
+        </div>
+        <div class="input-line">
+            <label for="password">Password</label>
+            <input class="input" type="text" id="password">
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="remember" id="remember"> Remember Me
+            </label>
+        </div>
+        <div id="sub">Login</div>
+    </div>
+
     <script src="public/lib/jquery.js"></script>
     <script src="public/js/login.js"></script>
 </body>
+
 </html>

@@ -23,7 +23,6 @@ class HomeController extends Controller {
       name:"julyL"
     }];
 
-    console.log(renderData);
     await ctx.render("home", {
       data: renderData
     });

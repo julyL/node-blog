@@ -5,9 +5,9 @@
 #article-list {
     background: #fff;
     color: #666;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, .08);
     padding: 30px;
-    margin: 30px;
+    margin: 0 30px 30px;
+    border-top: 1px solid #eeebeb;
 }
 
 .archives-li {
@@ -35,7 +35,7 @@
 
 .tag-title {
     font-weight: bold;
-    margin-top: 20px;
+    margin: 20px 0 5px;
 }
 
 .tag-list {
@@ -61,13 +61,13 @@
     background: #fff;
     color: #666;
     padding: 0 30px 20px;
-    margin: 30px 30px 0 30px;
+    margin: 0 30px;
     text-align: center;
 }
 
 #tagname-wrapper .tag-title {
     font-weight: bold;
-    margin: 20px 0;
+    margin: 20px 0 17px;
     font-size: 20px;
 }
 

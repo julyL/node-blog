@@ -7,11 +7,12 @@ class LoginService extends Service {
     var ctx = this.ctx;
     var body = ctx.request.body;
     if (body.username == "root" && body.password == "root") {
+      console.log(ctx.session);
       this.ctx.session.user = "admin";
       ctx.body = {
         code: 0,
         data: {
-          redirectUrl: "/admin"
+          redirectUrl: "/"
         }
       }
     } else {
