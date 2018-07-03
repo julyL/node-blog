@@ -12,3 +12,4 @@ run/
 *.un~
 /config/mongoDb.config.js
 /.vscode/**
+mongoDB.config

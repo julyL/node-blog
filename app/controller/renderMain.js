@@ -19,7 +19,7 @@ class HomeController extends Controller {
   // 渲染主页
   async renderHome(ctx) {
     let renderData = await this.getRenderData(ctx);
-    let tags = await ctx.service.tag.findAll();
+    let tags = await ctx.service.tag.findByName();
 
     await ctx.render("mainLayout", {
       data: renderData,
@@ -31,7 +31,7 @@ class HomeController extends Controller {
   // 渲染归档页面
   async renderArchives(ctx) {
     let renderData = await this.getRenderData(ctx);
-    let tags = await ctx.service.tag.findAll();
+    let tags = await ctx.service.tag.findByName();
     await ctx.render("mainLayout", {
       data: renderData,
       layout : 'archives',
@@ -43,7 +43,7 @@ class HomeController extends Controller {
   async renderArchivesByTags(ctx) {
     let tagName = ctx.params.tagName;
     let renderData = await this.getRenderData(ctx);
-    let tags = await ctx.service.tag.findAll();
+    let tags = await ctx.service.tag.findByName();
 
     tags.forEach(v => {
       v.active = v.name == tagName; // 标记选中的tag
@@ -51,7 +51,7 @@ class HomeController extends Controller {
     renderData.tags = tags;
 
     // 根据tag筛选文章
-    var activeTags = await ctx.service.tag.findAll(tagName)
+    var activeTags = await ctx.service.tag.findByName(tagName)
     renderData.articleList.list = renderData.articleList.list.filter(art => {
       return activeTags.ids.indexOf(art.articleId) != -1;
     })

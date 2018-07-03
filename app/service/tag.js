@@ -5,10 +5,10 @@ const Service = require("egg").Service;
 
 
 class TagService extends Service {
-  async addEach(data) {
+  async addTagList(data) {
     if (data.tags) {
       var tasks = data.tags.map(async tag => {
-        return this.addOne(tag, data)
+        return this.addTag(tag, data)
       })
       return Promise.all(tasks)
     } else {
@@ -16,17 +16,17 @@ class TagService extends Service {
     }
   }
 
-  async addOne(name, data) {
+  async addTag(name, data) {
     let tag = await tagModel.find(name);
     if (tag) {
-      return await tagModel.add(tag, data);
+      return await tagModel.addTagNum(tag, data);
     } else {
       return await tagModel.create(name, data);
     }
   }
 
-  async findAll(tagName) {
-    return await tagModel.findAll(tagName);
+  async findByName(tagName) {
+    return await tagModel.find(tagName);
   }
 
   /**
@@ -40,20 +40,20 @@ class TagService extends Service {
     beforeData.tags.forEach(name => {   
       let ind = nowData.tags.indexOf(name);
       if (ind == -1) {
-        this.subtratOne(name, beforeData);      
+        this.removeTag(name, beforeData);      
       }
     })
     nowData.tags.forEach(name => {   
       let ind = beforeData.tags.indexOf(name);
       if (ind == -1) {
-        this.addOne(name, nowData);
+        this.addTag(name, nowData);
       }
     })
   }
   async remove(data) {
     if (data.tags) {
       var tasks = data.tags.map(async tag => {
-        return this.subtratOne(tag, data)
+        return this.removeTag(tag, data)
       })
       return Promise.all(tasks)
     } else {
@@ -61,13 +61,13 @@ class TagService extends Service {
     }
   }
 
-  async subtratOne(name, data) {
+  async removeTag(name, data) {
     let tag = await tagModel.find(name);
     if (!tag) {
       return;
     }
     if (tag.ids.length > 1) {
-      return await tagModel.subtract(tag, data);
+      return await tagModel.subtractTagNum(tag, data);
     } else {
       return await tagModel.remove(tag);
     }

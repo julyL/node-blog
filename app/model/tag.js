@@ -27,7 +27,7 @@ module.exports = (mongoose) => {
          * 根据标签名返回相应的tagModel数据
          * @param {String} name 标签名
          */
-        async find(name) {
+        async findByName(name) {
             return await tagModel.findOne({
                 name
             })
@@ -37,7 +37,7 @@ module.exports = (mongoose) => {
          * @param {Object} tag tagModel数据
          * @param {Object} data 文章数据
          */
-        async add(tag, data) {
+        async addTagNum(tag, data) {
             tag.ids.push(data.articleId);
             return tagModel.update({
                 name: tag.name
@@ -53,7 +53,7 @@ module.exports = (mongoose) => {
          * @param {Object} tag tagModel数据
          * @param {Object} data 文章数据
          */
-        async subtract(tag, data) {
+        async subtractTagNum(tag, data) {
             var ind = tag.ids.indexOf(data.articleId);
             tag.ids.splice(ind, 1);
             return tagModel.update({
@@ -69,7 +69,7 @@ module.exports = (mongoose) => {
          * 移除标签
          * @param {Object} tag tagModel数据 
          */
-        async remove(tag) {
+        async removeByName(tag) {
             return tagModel.remove({
                 name: tag.name
             })
@@ -78,7 +78,7 @@ module.exports = (mongoose) => {
          * 获取所有标签
          * @param {String|undefined} name 标签名
          */
-        async findAll(name) {
+        async find(name) {
             if (name) {
                 return await tagModel.findOne({
                     name

@@ -56,7 +56,7 @@ module.exports = (mongoose) => {
             })
         },
         // 根据文章ID获取文章详情
-        getArticleById(articleId) {
+        findByArticleId(articleId) {
             return ArticleModel.findOne({
                 articleId: decodeURI(articleId)
             });

@@ -36,7 +36,7 @@ class ArticleService extends Service {
     }
   }
 
-  async remove(articleId) {
+  async removeArticleById(articleId) {
     try {
       await articleModel.removeArticleById(articleId);
       this.ctx.body = {
@@ -50,8 +50,8 @@ class ArticleService extends Service {
     }
   }
 
-  async find(id) {
-    return articleModel.getArticleById(id);
+  async findByArticleId(id) {
+    return articleModel.findByArticleId(id);
   }
 
   // 获取分页文章列表
